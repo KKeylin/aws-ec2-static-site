@@ -4,10 +4,12 @@ set -euo pipefail
 
 DEST="/opt/static-data"
 
-# Права для веб-сервера (если Nginx/Apache)
-chown -R www-data:www-data "$DEST" || true
-find "$DEST" -type d -exec chmod 755 {} \;
-find "$DEST" -type f -exec chmod 644 {} \;
+# Создадим каталог если не существует
+mkdir -p "$DEST"
 
-echo "Static data deployed successfully at $(date)"
-``
+# Проставим права
+chown -R www-data:www-data "$DEST" || true
+find "$DEST" -type d -exec chmod 755 {} \; || true
+find "$DEST" -type f -exec chmod 644 {} \; || true
+
+echo "[CodeDeploy] Static data deployed successfully at $(date)"
